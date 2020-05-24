@@ -1,1 +1,1 @@
-web: gunicorn moodyproject.wsgi --log-file
+web: gunicorn moodyproject.wsgi --log-file -
