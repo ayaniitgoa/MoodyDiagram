@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <style>
+    .center{
+      display:flex;
+      justify-content:center
+    }
+    body{
+      background: #330538;
+      color: white;
+      overflow-x: hidden;
+
+    }
+     textarea{
+      width:100%;
+      height: 6vh;
+      resize: none;
+     }
+    .pg-title{
+      display: flex;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+    }
+    #container{
+      margin: auto;
+      width: 80%;
+    }
+    form{
+      margin-top: 7vh
+
+    }
+    h2{
+      font-family: 'Montserrat', sans-serif;
+    }
+    button{
+      background:transparent;
+      border-color: white;
+      outline:none;
+      margin-top: 4vh;
+      border-radius:0.12em;
+      transition: all 0.2s;
+      color: white;
+      cursor:pointer;
+
+    }
+    button p{
+    font-family: 'Poppins', sans-serif;
+    margin: 10px 30px;
+    font-size: 1rem;
+    }
+
+    .but button:hover{
+      color: #330538;
+      background-color:white;
+    }
+    .example{
+      font-family: 'Montserrat', sans-serif;
+    }
+    .print{
+      display:inline-block;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    #myChart{
+        margin-bottom: 10vh;
+        margin-top: 10vh;
+    }
+
+    #_label{
+        display: inline-block;
+    }
+
+    .inputs{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    </style>
+    <title>Moody Diagram</title>
+  </head>
+  <body>
+    <div id="container">
+    <h1 class="pg-title">Moody Diagram</h1>
+      <p class="example center">Plotting Moody Diagram by solving Colebrook's equation using Newton Raphson and Secant Method</p>
+    <form action="/" method="get">
+        <div class="inputs">
+            <div>
+                <label for="length"><h2 id="_label">Length (m): &nbsp;</h2></label>
+                <input type="text" id="length" name="length">
+            </div>
+            <div>
+                <label for="diameter"><h2 id="_label" class="dia_label">Diameter (m): &nbsp;</h2></label>
+                <input type="text" id="diameter" name="diameter">
+            </div>
+            <div>
+                <label for="density"><h2 id="_label" class="den_label">Density (kg/m³): &nbsp;</h2></label>
+                <input type="text" id="density" name="density">
+            </div>
+        </div>
+        <div class="inputs">
+            <div>
+                <label for="viscosity"><h2 id="_label" class="vis_label">Viscosity (kg/(s*m): &nbsp;</h2></label>
+                <input type="text" id="viscosity" name="viscosity">
+            </div>
+            <div>
+                <label for="rel_rough"><h2 id="_label" class="rel_rough_label">Relative Roughness: &nbsp;</h2></label>
+                <input type="text" id="rel_rough" name="rel_rough">
+            </div>
+        </div>
+              <h2>Enter Reynolds Number(s):</h2>
+              <p class="example">For e.g. 5000 10000 100000 1500000</p>
+              <textarea name="text" placeholder="Enter Reynolds Number"></textarea>
+
+{% for num in rey %}
+      <h3 class="print">{{num}}</h3>
+       &nbsp
+{% endfor %}
+
+<!--      <h2>Enter Relative Roughness(es):</h2>-->
+<!--      <p class="example">For e.g. 0.0001 0.00002 0.008 0.00004</p>-->
+<!--      <textarea name="text2"></textarea>-->
+<!--{% for num in rr %}-->
+<!--      <h3 class="print">{{num}}</h3>-->
+<!--       &nbsp-->
+<!--{% endfor %}-->
+      <div class="but center">
+        <button onclick="myFunction()" type="submit"> <p> Plot Moody Diagram!</p></button>
+      </div>
+    </form>
+    <div id="myChart"></div>
+    </div>
+    <script>
+        function myFunction() {
+ window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+
+};​
+    </script>
+  <script>
+      var chartData =
+      {
+            "type": "line",
+              legend:
+              {
+
+              },
+            title: {
+                text: "Moody Diagram"
+            },
+            "scale-x":
+            {
+                "values": {{rey}},
+                    label:
+                    {
+                    text: "Reynolds Number"
+                    },
+            },
+            "scale-y":
+            {
+                    progression: "log",
+                    label:
+                    {
+                    text: "Friction Factor"
+                    },
+            },
+              plotarea: {
+                    'margin-left': "dynamic",
+                    'margin-bottom': "dynamic"
+            },
+            "series":
+            [
+                {
+                   "values": {{new}},
+                   text: "Newton Raphson"
+                },
+                {
+                   "values": {{sec}},
+                   text: "Secant Method"
+                },
+            ]
+
+      }
+
+    zingchart.render({
+      id: 'myChart',
+      data: chartData,
+    });
+  </script>
+  </body>
+</html>
