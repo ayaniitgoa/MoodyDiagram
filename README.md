@@ -4,6 +4,6 @@
 
 ### Work sample:
 
-![image1](images\MoodyDiagram1-Input.png)
+![image1](images/MoodyDiagram1-Input.png)
 
-![image1](images\MoodyDiagram2-Chart.png)
+![image1](images/MoodyDiagram2-Chart.png)
